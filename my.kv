@@ -1,0 +1,40 @@
+WindowManager:
+    MainWindow:
+    FirstWindow:
+    SecondWindow:
+
+
+<MainWindow>:
+    name: "main"
+
+    Button:
+        text: "Welcome!!"
+        on_release:
+            app.root.current = "first"
+
+<FirstWindow>:
+    name: "first"
+
+    GridLayout:
+        rows: 3
+        Label:
+            text: "Enter your name: "
+            multiline: False
+        TextInput:
+            id: name
+        Button:
+            text: "Let's Go!!"
+            on_release:
+                app.root.current = "second"
+<SecondWindow>:
+    name: "second"
+
+    Button:
+        text: "Go Back"
+        on_release:
+            app.root.current = "first"
+
+
+
+
+
