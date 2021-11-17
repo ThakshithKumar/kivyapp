@@ -6,6 +6,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager,Screen
+from kivy_garden.zbarcam import ZBarCam
 
 
 def pressed(instance):
@@ -32,19 +33,13 @@ class WindowManager(ScreenManager):
     pass
 
 
-'''class Grid(GridLayout):
-    def __init__(self, **kwargs):
-        super(Grid, self).__init__(**kwargs)
-        self.rows = 2
+class GeneratorWindow(Screen):
+    pass
 
-        self.button = Button(text="Generator")
-        self.add_widget(self.button)
-        self.button.bind(on_press=pressed)
 
-        self.button2 = Button(text="Scanner")
-        self.add_widget(self.button2)
-        self.button2.bind(on_press=pressed2)
-'''
+class ScannerWindow(Screen):
+    pass
+
 
 kv = Builder.load_file("my.kv")
 
