@@ -2,6 +2,8 @@ WindowManager:
     MainWindow:
     FirstWindow:
     SecondWindow:
+    GeneratorWindow:
+    ScannerWindow:
 
 
 <MainWindow>:
@@ -29,12 +31,43 @@ WindowManager:
 <SecondWindow>:
     name: "second"
 
-    Button:
-        text: "Go Back"
-        on_release:
-            app.root.current = "first"
+    GridLayout:
+        rows:3
+        Button:
+            text: "QR Generator"
+            on_release:
+                app.root.current = "generator"
+
+        Button:
+            text: "QR Scanner"
+            on_release:
+                app.root.current = "scanner"
+
+        Button:
+            text: "Go Back"
+            on_release:
+                app.root.current = "first"
+
+<GeneratorWindow>:
 
 
 
 
+<ScannerWindow>:
+    name: "scanner"
+    BoxLayout:
+        size: root.width,root.height
+        orientation: 'vertical'
+        ZBarCam:
+            id:qrcodecam
+        Label:
+            size_hint: None,None
+            size: self.texture_size[0],50
+            text: ' '.join([str(symbol.data) for symbol in qrcodecam.symbols])
 
+        Button:
+            size_hint: None,None
+            pos: 0,0
+            text: "Back"
+            on_release:
+                app.root.current = "second"
