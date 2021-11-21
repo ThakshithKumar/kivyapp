@@ -1,27 +1,42 @@
+#: import RVBTransition kivy.garden.moretransitions.RVBTransition
 WindowManager:
     MainWindow:
     FirstWindow:
     SecondWindow:
     GeneratorWindow:
     ScannerWindow:
+    Dose1Window:
+    Dose2Window:
+    Function:
 
 
 <MainWindow>:
     name: "main"
+    MDBoxLayout:
+        MDLabel:
+            text:"Welcome"
+            halign:"center"
+            valign:"center"
+            theme_text_color:"Custom"
+            text_color:(51/255,153/255,255/255)
+            font_style:"H1"
 
-    Button:
-        text: "Welcome!!"
-        on_release:
-            app.root.current = "first"
-
+        MDIconButton:
+            icon: "arrow-right-circle-outline"
+            pos_hint: {"center_x": .1, "center_y": .1}
+            on_release: app.root.current = "first"
 <FirstWindow>:
     name: "first"
 
     GridLayout:
         rows: 3
-        Label:
-            text: "Enter your name: "
-            multiline: False
+        MDLabel:
+            text:"Enter your Name:"
+            halign:"center"
+            valign:"center"
+            theme_text_color:"Custom"
+            text_color:(51/255,153/255,255/255)
+            font_style:"H3"
         TextInput:
             id: name
         Button:
@@ -48,8 +63,73 @@ WindowManager:
             on_release:
                 app.root.current = "first"
 
-<GeneratorWindow>:
+<Function>:
+    name: "generator"
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width,root.height
 
+        MDLabel:
+            text:"You are:"
+            halign:"center"
+            valign:"center"
+            theme_text_color:"Custom"
+            text_color:(51/255,153/255,255/255)
+            font_style:"H3"
+
+
+        Button:
+            text: "Vaccinated with 1st Dose"
+
+            on_press:
+                root.generate_qrcode(root)
+            on_release:
+                app.root.current="dose1"
+
+
+
+        Button:
+            text: "Vaccinated with 1st & 2nd Dose"
+            on_press:
+                root.generate_qrcode2(root)
+            on_release:
+                app.root.current = "dose2"
+
+<Dose1Window>:
+    name: "dose1"
+
+    BoxLayout:
+        orientation: "vertical"
+        padding:10
+        spacing:10
+
+        Image:
+            source:"image.png"
+            id: img_
+
+        Button:
+            size_hint: None,None
+            pos: 50,0
+            text: "Back"
+            on_release:
+                app.root.current = "generator"
+
+
+<Dose2Window>:
+    name: "dose2"
+
+    BoxLayout:
+        orientation: "vertical"
+        Image:
+            source:"image2.png"
+            id: img_2
+
+        Button:
+            size_hint: None,None
+            pos: 50,0
+            text: "Back"
+            on_release:
+                app.root.current = "generator"
 
 
 
@@ -67,7 +147,7 @@ WindowManager:
 
         Button:
             size_hint: None,None
-            pos: 0,0
+            pos: 50,0
             text: "Back"
             on_release:
                 app.root.current = "second"
