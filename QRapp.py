@@ -73,9 +73,6 @@ class ScannerWindow(Screen):
     pass
 
 
-
-
-
 class QRapp(MDApp):
     def build(self):
         self.root = Builder.load_file("my.kv")
