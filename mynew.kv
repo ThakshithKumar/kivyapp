@@ -1,0 +1,182 @@
+
+WindowManager:
+    MainWindow:
+    FirstWindow:
+    SecondWindow:
+    GeneratorWindow:
+    ScannerWindow:
+    Dose1Window:
+    Dose2Window:
+    Function:
+
+
+<MainWindow>:
+    name: "main"
+    MDFloatLayout:
+        MDLabel:
+            text:"Welcome"
+            halign:"center"
+            valign:"center"
+            theme_text_color:"Custom"
+            text_color:(51/255,153/255,255/255)
+            font_style:"H4"
+
+
+        MDIconButton:
+            icon: "arrow-right-circle-outline"
+            pos_hint: {"center_x": .5, "center_y": .1}
+            on_release: app.root.current = "first"
+<FirstWindow>:
+    name: "first"
+
+    MDFloatLayout:
+        rows: 3
+        MDLabel:
+            text:"Enter your Name:"
+            halign:"center"
+            valign:"center"
+            theme_text_color:"Custom"
+            text_color:(51/255,153/255,255/255)
+            font_style:"H3"
+        MDTextField:
+            hint_text: "Username"
+            id: usernm
+            mode: "fill"
+            pos_hint: {"center_x": .5, "center_y": 0.3}
+
+        MDFillRoundFlatButton:
+            text: "Let's Go!!"
+            pos_hint: {"center_x": .5, "center_y": 0.1}
+            #on_release:
+                #app.welcome()
+            on_release:
+                app.root.current = "second"
+
+
+<SecondWindow>:
+    name: "second"
+
+    MDFloatLayout:
+        rows:3
+        MDLabel:
+            id: welcom
+            text:"Welcome"
+            halign:"center"
+            valign:"center"
+            theme_text_color:"Custom"
+            text_color:(51/255,153/255,255/255)
+            font_style:"H3"
+            pos_hint: {"center_x": .5, "center_y": 0.7}
+
+        MDFillRoundFlatButton:
+            text: "QR Generator"
+            pos_hint: {"center_x": .5, "center_y": 0.5}
+            on_release:
+                app.root.current = "generator"
+
+        MDFillRoundFlatButton:
+            text: "QR Scanner"
+            pos_hint: {"center_x": .5, "center_y": 0.4}
+            on_release:
+                app.root.current = "scanner"
+
+        MDFillRoundFlatButton:
+            text: "Go Back"
+            pos_hint: {"center_x": .5, "center_y": 0.3}
+            on_release:
+                app.root.current = "first"
+
+<Function>:
+    name: "generator"
+    MDFloatLayout:
+        orientation: "vertical"
+        size: root.width,root.height
+
+        MDLabel:
+            text:"You are:"
+            halign:"center"
+            valign:"center"
+            theme_text_color:"Custom"
+            text_color:(51/255,153/255,255/255)
+            font_style:"H3"
+            pos_hint: {"center_x": .5, "center_y": 0.7}
+
+
+        MDRectangleFlatButton:
+            text: "Vaccinated with 1st Dose"
+            pos_hint: {"center_x": .5, "center_y": 0.4}
+            on_press:
+                root.generate_qrcode(root)
+            on_release:
+                app.root.current="dose1"
+
+
+
+        MDRectangleFlatButton:
+            text: "Vaccinated with 1st & 2nd Dose"
+            pos_hint: {"center_x": .5, "center_y": 0.3}
+
+            on_press:
+                root.generate_qrcode2(root)
+            on_release:
+                app.root.current = "dose2"
+
+        MDFloatingActionButton:
+            icon: "keyboard-backspace"
+            text: "Back"
+            on_release:
+                app.root.current = "second"
+
+<Dose1Window>:
+    name: "dose1"
+
+    BoxLayout:
+        orientation: "vertical"
+        padding:10
+        spacing:10
+
+        Image:
+            source:"image.png"
+            id: img_
+
+        MDFloatingActionButton:
+            icon: "keyboard-backspace"
+            text: "Back"
+            on_release:
+                app.root.current = "generator"
+
+
+<Dose2Window>:
+    name: "dose2"
+
+    BoxLayout:
+        orientation: "vertical"
+        Image:
+            source:"image2.png"
+            id: img_2
+
+        MDFloatingActionButton:
+            icon: "keyboard-backspace"
+            text: "Back"
+            on_release:
+                app.root.current = "generator"
+
+
+
+<ScannerWindow>:
+    name: "scanner"
+    BoxLayout:
+        size: root.width,root.height
+        orientation: 'vertical'
+        ZBarCam:
+            id:qrcodecam
+        Label:
+            size_hint: None,None
+            size: self.texture_size[0],50
+            text: ' '.join([str(symbol.data) for symbol in qrcodecam.symbols])
+
+        MDFloatingActionButton:
+            icon: "keyboard-backspace"
+            text: "Back"
+            on_release:
+                app.root.current = "second"
